@@ -161,7 +161,7 @@ public class ArrayList<E> extends AbstractList<E>
     /**
      * Constructs an empty list with an initial capacity of ten.
      */
-    public ArrayList() {
+    public ArrayList() {// 构造器，默认初始化一个空数组 Object[] 值为 {}
         this.elementData = DEFAULTCAPACITY_EMPTY_ELEMENTDATA;
     }
 
@@ -220,8 +220,8 @@ public class ArrayList<E> extends AbstractList<E>
     }
 
     private void ensureCapacityInternal(int minCapacity) {
-        if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {
-            minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity);
+        if (elementData == DEFAULTCAPACITY_EMPTY_ELEMENTDATA) {// 判断elementData是否是一个空数组 {}，即是否是初始new 创建的
+            minCapacity = Math.max(DEFAULT_CAPACITY, minCapacity); // 如果是，将minCapacity设置为10与minCapacity的最大值，即第一次扩容是10
         }
 
         ensureExplicitCapacity(minCapacity);
@@ -231,7 +231,7 @@ public class ArrayList<E> extends AbstractList<E>
         modCount++;
 
         // overflow-conscious code
-        if (minCapacity - elementData.length > 0)
+        if (minCapacity - elementData.length > 0)// 确定minCapacity是否大于当前数组的大小，如果大于就要扩容
             grow(minCapacity);
     }
 
@@ -250,15 +250,15 @@ public class ArrayList<E> extends AbstractList<E>
      * @param minCapacity the desired minimum capacity
      */
     private void grow(int minCapacity) {
-        // overflow-conscious code
+        // overflow-conscious code  // 这里用了一个小的算法来扩容
         int oldCapacity = elementData.length;
-        int newCapacity = oldCapacity + (oldCapacity >> 1);
-        if (newCapacity - minCapacity < 0)
+        int newCapacity = oldCapacity + (oldCapacity >> 1);// 按1.5倍扩容 x >> 1 等于 x / 2
+        if (newCapacity - minCapacity < 0) // 如果扩容后的容量仍然小于minCapacity，就以minCapacity为准
             newCapacity = minCapacity;
         if (newCapacity - MAX_ARRAY_SIZE > 0)
             newCapacity = hugeCapacity(minCapacity);
         // minCapacity is usually close to size, so this is a win:
-        elementData = Arrays.copyOf(elementData, newCapacity);
+        elementData = Arrays.copyOf(elementData, newCapacity); // 进行数组按新的容量，扩容拷贝第一次是{null,。。。,null}10
     }
 
     private static int hugeCapacity(int minCapacity) {
@@ -455,8 +455,8 @@ public class ArrayList<E> extends AbstractList<E>
      * @return <tt>true</tt> (as specified by {@link Collection#add})
      */
     public boolean add(E e) {
-        ensureCapacityInternal(size + 1);  // Increments modCount!!
-        elementData[size++] = e;
+        ensureCapacityInternal(size + 1);// 确定容量，如果不够就扩容  // Increments modCount!!
+        elementData[size++] = e;// 第一次elementData为{"1",null,null,...,null}9个null
         return true;
     }
 
